@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ycesjengxss6"
-path="res://.godot/imported/tileset1.png-a1e148b52f43da8fc409f1c32aacfc4f.ctex"
+uid="uid://t3ox80l5trex"
+path="res://.godot/imported/bat_walk.png-1b557a13254989a641255d9b0f731a8e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://world/level/assets/tileset1.png"
-dest_files=["res://.godot/imported/tileset1.png-a1e148b52f43da8fc409f1c32aacfc4f.ctex"]
+source_file="res://assets/textures/bat_walk.png"
+dest_files=["res://.godot/imported/bat_walk.png-1b557a13254989a641255d9b0f731a8e.ctex"]
 
 [params]
 

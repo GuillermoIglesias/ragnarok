@@ -1,35 +1,40 @@
 extends CharacterBody2D
 
-signal cast_spell(spell_scene, target, location)
+signal spell_casted(spell_scene, target, location)
 
 @export var speed = 100
 @export var health = 100
 
-@onready var spell_scene = preload("res://effects/fire/fire.tscn")
-
 var target = position
 
-func _ready():
-	$AnimatedSprite.animation = "idle"
-	$AnimatedSprite.play()
-	$CastTimer.start()
+@onready var FireScene = preload("res://spells/fire/fire.tscn")
+@onready var anim = $AnimatedSprite
+@onready var cast_timer = $CastTimer
 
-func _process(delta):
+
+func _ready():
+	anim.play("idle")
+	cast_timer.start()
+
+
+func _process(_delta):
+	movement()
+
+
+func movement():
 	velocity = position.direction_to(target) * speed
 
 	if position.distance_to(target) > 10:
-#		move_and_slide()
-		var _collision = move_and_collide(velocity * delta)
-#		if collision:
-#			print("Collision")
+		move_and_slide()
 
-		$AnimatedSprite.animation = "walk"
+		anim.play("walk")
 	else:
-		$AnimatedSprite.animation = "idle"
+		anim.play("idle")
 
 	if Input.is_action_pressed("left_click"):
 		target = get_global_mouse_position()
-		$AnimatedSprite.flip_h = get_local_mouse_position().x < 0
+		anim.flip_h = get_local_mouse_position().x < 0
+
 
 func _on_cast_timer_timeout():
 	var mobs = get_tree().get_nodes_in_group("mobs")
@@ -47,5 +52,9 @@ func _on_cast_timer_timeout():
 
 	if shortest_distance < INF:
 		var relative_mob_position = position.direction_to(closest_mob.position)
-		cast_spell.emit(spell_scene, relative_mob_position, position)
+		spell_casted.emit(FireScene, relative_mob_position, position)
 
+
+func _on_hurtbox_hurt(damage):
+	health -= damage
+	print(health)

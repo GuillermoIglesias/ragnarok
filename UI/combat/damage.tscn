@@ -107,6 +107,7 @@ outline_size = 2
 outline_color = Color(0, 0, 0, 1)
 
 [node name="Damage" type="Node2D"]
+texture_filter = 1
 script = ExtResource("1_dbuxy")
 metadata/_edit_group_ = true
 

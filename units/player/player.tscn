@@ -1,63 +1,64 @@
-[gd_scene load_steps=20 format=3 uid="uid://bh4ukwstrbqhb"]
+[gd_scene load_steps=22 format=3 uid="uid://bh4ukwstrbqhb"]
 
 [ext_resource type="Script" path="res://units/player/player.gd" id="1_b1vfs"]
-[ext_resource type="Texture2D" uid="uid://bkf325buucdwf" path="res://units/player/assets/player_idle.png" id="1_kns6i"]
-[ext_resource type="Texture2D" uid="uid://ipjdp6e1mhyd" path="res://units/player/assets/player_walk.png" id="2_fpovb"]
+[ext_resource type="Texture2D" uid="uid://bkf325buucdwf" path="res://assets/textures/player_idle.png" id="2_n62rd"]
+[ext_resource type="Texture2D" uid="uid://ipjdp6e1mhyd" path="res://assets/textures/player_walk.png" id="3_4ew8x"]
+[ext_resource type="PackedScene" uid="uid://0snat8gew3f2" path="res://utility/hurtbox.tscn" id="4_16c7j"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8h5bo"]
-atlas = ExtResource("1_kns6i")
+atlas = ExtResource("2_n62rd")
 region = Rect2(0, 0, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_abwr3"]
-atlas = ExtResource("1_kns6i")
+atlas = ExtResource("2_n62rd")
 region = Rect2(0, 48, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bnunf"]
-atlas = ExtResource("1_kns6i")
+atlas = ExtResource("2_n62rd")
 region = Rect2(0, 96, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ofdmy"]
-atlas = ExtResource("1_kns6i")
+atlas = ExtResource("2_n62rd")
 region = Rect2(0, 144, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_00atc"]
-atlas = ExtResource("1_kns6i")
+atlas = ExtResource("2_n62rd")
 region = Rect2(0, 192, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7r54y"]
-atlas = ExtResource("1_kns6i")
+atlas = ExtResource("2_n62rd")
 region = Rect2(0, 240, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_86xoa"]
-atlas = ExtResource("2_fpovb")
+atlas = ExtResource("3_4ew8x")
 region = Rect2(0, 0, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8agvc"]
-atlas = ExtResource("2_fpovb")
+atlas = ExtResource("3_4ew8x")
 region = Rect2(0, 48, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yhdkb"]
-atlas = ExtResource("2_fpovb")
+atlas = ExtResource("3_4ew8x")
 region = Rect2(0, 96, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ou8rp"]
-atlas = ExtResource("2_fpovb")
+atlas = ExtResource("3_4ew8x")
 region = Rect2(0, 144, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7u7em"]
-atlas = ExtResource("2_fpovb")
+atlas = ExtResource("3_4ew8x")
 region = Rect2(0, 192, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bixtp"]
-atlas = ExtResource("2_fpovb")
+atlas = ExtResource("3_4ew8x")
 region = Rect2(0, 240, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wms5w"]
-atlas = ExtResource("2_fpovb")
+atlas = ExtResource("3_4ew8x")
 region = Rect2(0, 288, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7aj44"]
-atlas = ExtResource("2_fpovb")
+atlas = ExtResource("3_4ew8x")
 region = Rect2(0, 336, 32, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_7t53a"]
@@ -116,24 +117,39 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_na0qv"]
-radius = 8.0
-height = 36.0
+radius = 4.0
+height = 22.0
 
-[node name="Player" type="CharacterBody2D"]
-collision_mask = 2
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7crn3"]
+size = Vector2(12, 26)
+
+[node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_b1vfs")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_7t53a")
-animation = &"idle"
-frame_progress = 0.569031
+animation = &"walk"
 speed_scale = 2.0
 
 [node name="Collision" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource("CapsuleShape2D_na0qv")
 
 [node name="CastTimer" type="Timer" parent="."]
 
+[node name="Camera" type="Camera2D" parent="."]
+
+[node name="Hurtbox" parent="." instance=ExtResource("4_16c7j")]
+collision_layer = 0
+collision_mask = 2
+HurtboxTypes = 0
+
+[node name="Collision" parent="Hurtbox" index="0"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_7crn3")
+
 [connection signal="timeout" from="CastTimer" to="." method="_on_cast_timer_timeout"]
+[connection signal="hurt" from="Hurtbox" to="." method="_on_hurtbox_hurt"]
+
+[editable path="Hurtbox"]

@@ -1,45 +1,46 @@
 extends CharacterBody2D
 
-signal getting_hit(mob_position, damage, critical)
+signal received_hit(mob_position, damage, critical)
 
 @export var speed = 25
 @export var health = 10
 
-var target = position
-
-@onready var player = get_tree().get_root().get_node("/root/Level/Player")
+@onready var player = get_tree().get_first_node_in_group("player")
+@onready var anim = $AnimatedSprite
 
 
 func _ready():
-	$AnimatedSprite.animation = "walk"
-	$AnimatedSprite.play()
+	anim.play("walk")
 
 
-func _process(delta):
-	target = player.position
-	velocity = position.direction_to(target) * speed * randf_range(1, 2)
+func _process(_delta):
+	var target = player.global_position
+	var direction = global_position.direction_to(target)
+	velocity = direction * speed
 
 	if health > 0:
-		$AnimatedSprite.flip_h = velocity.x > 0
+		anim.flip_h = velocity.x > 0
 
 	if position.distance_to(target) > 1:
-#		move_and_slide()
-		var _collision = move_and_collide(velocity * delta)
+		move_and_slide()
+
+
+#func _on_hurtbox_hurt(damage):
+#	damaged(damage)
 
 
 func damaged(damage):
 	health -= damage
-	getting_hit.emit(position, damage, false)
+	received_hit.emit(position, damage, false)
 	if health <= 0:
 		speed = 0
-		$AnimatedSprite.animation = "death"
+		anim.play("death")
 	else:
-		$AnimatedSprite.animation = "damaged"
+		anim.play("damaged")
 
 
 func _on_animated_sprite_animation_finished():
-	if $AnimatedSprite.animation == "death":
+	if anim.animation == "death":
 		queue_free()
-	elif $AnimatedSprite.animation == "damaged":
-		$AnimatedSprite.animation = "walk"
-		$AnimatedSprite.play()
+	elif anim.animation == "damaged":
+		anim.play("walk")
