@@ -20,7 +20,11 @@ func _on_area_entered(area):
 				2: # Disabled Hitbox
 					if area.has_method("temp_disable"):
 						area.temp_disable()
+
 			hurt.emit(area.damage)
+
+			if area.has_method("spell_hit"):
+				area.spell_hit(1)
 
 
 func _on_disable_timer_timeout():

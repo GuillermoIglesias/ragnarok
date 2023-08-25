@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://bh4ukwstrbqhb"]
+[gd_scene load_steps=23 format=3 uid="uid://bh4ukwstrbqhb"]
 
 [ext_resource type="Script" path="res://units/player/player.gd" id="1_b1vfs"]
 [ext_resource type="Texture2D" uid="uid://bkf325buucdwf" path="res://assets/textures/player_idle.png" id="2_n62rd"]
@@ -123,6 +123,9 @@ height = 22.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7crn3"]
 size = Vector2(12, 26)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_erng2"]
+radius = 380.426
+
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_layer = 2
 collision_mask = 4
@@ -133,12 +136,19 @@ metadata/_edit_group_ = true
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_7t53a")
 animation = &"walk"
+frame = 4
+frame_progress = 0.537721
 speed_scale = 2.0
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_na0qv")
 
-[node name="CastTimer" type="Timer" parent="."]
+[node name="FireTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="NovaTimer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
 
 [node name="Camera" type="Camera2D" parent="."]
 
@@ -151,7 +161,18 @@ HurtboxTypes = 0
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_7crn3")
 
-[connection signal="timeout" from="CastTimer" to="." method="_on_cast_timer_timeout"]
+[node name="Detector" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 4
+
+[node name="AreaDetection" type="CollisionShape2D" parent="Detector"]
+shape = SubResource("CircleShape2D_erng2")
+
+[connection signal="timeout" from="FireTimer" to="." method="_on_fire_timer_timeout"]
+[connection signal="timeout" from="NovaTimer" to="." method="_on_nova_timer_timeout"]
 [connection signal="hurt" from="Hurtbox" to="." method="_on_hurtbox_hurt"]
+[connection signal="body_entered" from="Detector" to="." method="_on_detector_body_entered"]
+[connection signal="body_exited" from="Detector" to="." method="_on_detector_body_exited"]
 
 [editable path="Hurtbox"]

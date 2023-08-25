@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-signal received_hit(mob_position, damage, critical)
+#signal received_hit(mob_position, damage, critical)
 
 @export var speed = 25
 @export var health = 10
@@ -25,13 +25,13 @@ func _process(_delta):
 		move_and_slide()
 
 
-#func _on_hurtbox_hurt(damage):
-#	damaged(damage)
+func _on_hurtbox_hurt(damage):
+	damaged(damage)
 
 
 func damaged(damage):
 	health -= damage
-	received_hit.emit(position, damage, false)
+#	received_hit.emit(position, damage, false)
 	if health <= 0:
 		speed = 0
 		anim.play("death")

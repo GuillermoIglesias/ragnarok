@@ -1,0 +1,63 @@
+[gd_scene load_steps=9 format=3 uid="uid://cjjncs3xcl7dl"]
+
+[ext_resource type="Script" path="res://spells/nova.gd" id="1_ci2i7"]
+[ext_resource type="Texture2D" uid="uid://d33lclsjygqc8" path="res://assets/textures/ice_sheet.png" id="1_j6737"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xvpcg"]
+atlas = ExtResource("1_j6737")
+region = Rect2(192, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xjhlr"]
+atlas = ExtResource("1_j6737")
+region = Rect2(224, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_21lg4"]
+atlas = ExtResource("1_j6737")
+region = Rect2(256, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j0lyo"]
+atlas = ExtResource("1_j6737")
+region = Rect2(288, 160, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_52nky"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xvpcg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xjhlr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_21lg4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j0lyo")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jsehu"]
+radius = 79.0569
+
+[node name="Nova" type="Area2D" groups=["attack"]]
+top_level = true
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("1_ci2i7")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_52nky")
+animation = &"attack"
+frame = 3
+frame_progress = 1.0
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_jsehu")
+
+[connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_animated_sprite_animation_finished"]
