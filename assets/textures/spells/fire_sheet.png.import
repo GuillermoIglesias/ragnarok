@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c642hjoxl0sqt"
-path="res://.godot/imported/bat_death.png-de29d0fce558bf5f0b4f0f32bf632442.ctex"
+uid="uid://d3avedjaqvt6b"
+path="res://.godot/imported/fire_sheet.png-26e272b13a96b1b515036034f4d04ab3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/bat_death.png"
-dest_files=["res://.godot/imported/bat_death.png-de29d0fce558bf5f0b4f0f32bf632442.ctex"]
+source_file="res://assets/textures/spells/fire_sheet.png"
+dest_files=["res://.godot/imported/fire_sheet.png-26e272b13a96b1b515036034f4d04ab3.ctex"]
 
 [params]
 

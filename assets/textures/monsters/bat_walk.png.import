@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://t3ox80l5trex"
-path="res://.godot/imported/bat_walk.png-1b557a13254989a641255d9b0f731a8e.ctex"
+path="res://.godot/imported/bat_walk.png-3c463ef18242a7024f37a670e84db5e9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/bat_walk.png"
-dest_files=["res://.godot/imported/bat_walk.png-1b557a13254989a641255d9b0f731a8e.ctex"]
+source_file="res://assets/textures/monsters/bat_walk.png"
+dest_files=["res://.godot/imported/bat_walk.png-3c463ef18242a7024f37a670e84db5e9.ctex"]
 
 [params]
 

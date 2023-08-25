@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d33lclsjygqc8"
-path="res://.godot/imported/ice_sheet.png-68f4c467584d66d9a35490d11f7bde32.ctex"
+uid="uid://bkf325buucdwf"
+path="res://.godot/imported/player_idle.png-299aff04a634558bc70c0acba6f3cc6b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/ice_sheet.png"
-dest_files=["res://.godot/imported/ice_sheet.png-68f4c467584d66d9a35490d11f7bde32.ctex"]
+source_file="res://assets/textures/player/player_idle.png"
+dest_files=["res://.godot/imported/player_idle.png-299aff04a634558bc70c0acba6f3cc6b.ctex"]
 
 [params]
 

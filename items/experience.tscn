@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://c4noojkdqonq3"]
+
+[ext_resource type="Script" path="res://items/experience.gd" id="1_cx5m3"]
+[ext_resource type="Texture2D" uid="uid://f6cx0jt3bmd5" path="res://assets/textures/items/exp_green.png" id="2_0ck76"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lucux"]
+radius = 5.0
+
+[node name="Experience" type="Area2D" groups=["loot"]]
+top_level = true
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("1_cx5m3")
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_0ck76")
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
+shape = SubResource("CircleShape2D_lucux")

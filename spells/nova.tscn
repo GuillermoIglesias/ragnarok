@@ -1,22 +1,22 @@
 [gd_scene load_steps=9 format=3 uid="uid://cjjncs3xcl7dl"]
 
 [ext_resource type="Script" path="res://spells/nova.gd" id="1_ci2i7"]
-[ext_resource type="Texture2D" uid="uid://d33lclsjygqc8" path="res://assets/textures/ice_sheet.png" id="1_j6737"]
+[ext_resource type="Texture2D" uid="uid://d33lclsjygqc8" path="res://assets/textures/spells/ice_sheet.png" id="2_v7g64"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xvpcg"]
-atlas = ExtResource("1_j6737")
+atlas = ExtResource("2_v7g64")
 region = Rect2(192, 160, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xjhlr"]
-atlas = ExtResource("1_j6737")
+atlas = ExtResource("2_v7g64")
 region = Rect2(224, 160, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_21lg4"]
-atlas = ExtResource("1_j6737")
+atlas = ExtResource("2_v7g64")
 region = Rect2(256, 160, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j0lyo"]
-atlas = ExtResource("1_j6737")
+atlas = ExtResource("2_v7g64")
 region = Rect2(288, 160, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_52nky"]

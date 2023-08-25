@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://c4baxc4b6jt5i"]
 
 [ext_resource type="Script" path="res://world/level.gd" id="1_rhnw3"]
-[ext_resource type="Texture2D" uid="uid://ycesjengxss6" path="res://assets/textures/tileset1.png" id="2_pmmna"]
+[ext_resource type="Texture2D" uid="uid://ycesjengxss6" path="res://assets/textures/terrain/tileset1.png" id="2_wa2q3"]
 [ext_resource type="PackedScene" uid="uid://bh4ukwstrbqhb" path="res://units/player/player.tscn" id="3_8cuki"]
 [ext_resource type="PackedScene" uid="uid://cyumuqpblvkf8" path="res://utility/spawner.tscn" id="4_iyq3m"]
 [ext_resource type="PackedScene" uid="uid://d01ws4kpvyba8" path="res://units/mob/mob.tscn" id="5_m57gb"]
@@ -11,7 +11,7 @@
 tile_data = PackedInt32Array(1048576, 524288, 0, 1114112, 524288, 1, 786433, 458752, 3, 1048577, 589824, 0, 1114113, 589824, 1, 196610, 0, 0, 262146, 0, 1, 327682, 0, 2, 393218, 0, 3, 196611, 65536, 0, 262147, 65536, 1, 327683, 65536, 2, 393219, 65536, 3, 917510, 131072, 2, 983046, 131072, 3, 917511, 196608, 2, 983047, 196608, 3, 8, 262144, 3, 589832, 393216, 0, 655368, 393216, 1, 9, 327680, 3, 589833, 458752, 0, 655369, 458752, 1, 393228, 393216, 0, 458764, 393216, 1, 393229, 458752, 0, 458765, 458752, 1, 1245200, 0, 0, 1245201, 65536, 0, 196626, 262144, 2, 262162, 262144, 3, 196627, 327680, 2, 262163, 327680, 3, 1245208, 262144, 2, 1245209, 327680, 2, 393242, 0, 0, 458778, 0, 1, 524314, 0, 2, 589850, 0, 3, 393243, 65536, 0, 458779, 65536, 1, 524315, 65536, 2, 589851, 65536, 3, 917532, 393216, 0, 983068, 393216, 1, 917533, 458752, 0, 983069, 458752, 1)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p3i2j"]
-texture = ExtResource("2_pmmna")
+texture = ExtResource("2_wa2q3")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
@@ -613,3 +613,5 @@ layer_1/tile_data = PackedInt32Array(196588, 0, 0, 262124, 0, 1, 327660, 0, 2, 3
 
 [node name="Spawner" parent="." instance=ExtResource("4_iyq3m")]
 spawns = Array[ExtResource("6_7dljh")]([SubResource("Resource_hfuqy"), SubResource("Resource_hgcrc")])
+
+[node name="Loot" type="Node2D" parent="." groups=["loot"]]

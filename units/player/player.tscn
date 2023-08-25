@@ -1,64 +1,64 @@
-[gd_scene load_steps=23 format=3 uid="uid://bh4ukwstrbqhb"]
+[gd_scene load_steps=25 format=3 uid="uid://bh4ukwstrbqhb"]
 
 [ext_resource type="Script" path="res://units/player/player.gd" id="1_b1vfs"]
-[ext_resource type="Texture2D" uid="uid://bkf325buucdwf" path="res://assets/textures/player_idle.png" id="2_n62rd"]
-[ext_resource type="Texture2D" uid="uid://ipjdp6e1mhyd" path="res://assets/textures/player_walk.png" id="3_4ew8x"]
+[ext_resource type="Texture2D" uid="uid://bkf325buucdwf" path="res://assets/textures/player/player_idle.png" id="2_6yahn"]
+[ext_resource type="Texture2D" uid="uid://ipjdp6e1mhyd" path="res://assets/textures/player/player_walk.png" id="3_6hsme"]
 [ext_resource type="PackedScene" uid="uid://0snat8gew3f2" path="res://utility/hurtbox.tscn" id="4_16c7j"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8h5bo"]
-atlas = ExtResource("2_n62rd")
+atlas = ExtResource("2_6yahn")
 region = Rect2(0, 0, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_abwr3"]
-atlas = ExtResource("2_n62rd")
+atlas = ExtResource("2_6yahn")
 region = Rect2(0, 48, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bnunf"]
-atlas = ExtResource("2_n62rd")
+atlas = ExtResource("2_6yahn")
 region = Rect2(0, 96, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ofdmy"]
-atlas = ExtResource("2_n62rd")
+atlas = ExtResource("2_6yahn")
 region = Rect2(0, 144, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_00atc"]
-atlas = ExtResource("2_n62rd")
+atlas = ExtResource("2_6yahn")
 region = Rect2(0, 192, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7r54y"]
-atlas = ExtResource("2_n62rd")
+atlas = ExtResource("2_6yahn")
 region = Rect2(0, 240, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_86xoa"]
-atlas = ExtResource("3_4ew8x")
+atlas = ExtResource("3_6hsme")
 region = Rect2(0, 0, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8agvc"]
-atlas = ExtResource("3_4ew8x")
+atlas = ExtResource("3_6hsme")
 region = Rect2(0, 48, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yhdkb"]
-atlas = ExtResource("3_4ew8x")
+atlas = ExtResource("3_6hsme")
 region = Rect2(0, 96, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ou8rp"]
-atlas = ExtResource("3_4ew8x")
+atlas = ExtResource("3_6hsme")
 region = Rect2(0, 144, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7u7em"]
-atlas = ExtResource("3_4ew8x")
+atlas = ExtResource("3_6hsme")
 region = Rect2(0, 192, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bixtp"]
-atlas = ExtResource("3_4ew8x")
+atlas = ExtResource("3_6hsme")
 region = Rect2(0, 240, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wms5w"]
-atlas = ExtResource("3_4ew8x")
+atlas = ExtResource("3_6hsme")
 region = Rect2(0, 288, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7aj44"]
-atlas = ExtResource("3_4ew8x")
+atlas = ExtResource("3_6hsme")
 region = Rect2(0, 336, 32, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_7t53a"]
@@ -126,6 +126,11 @@ size = Vector2(12, 26)
 [sub_resource type="CircleShape2D" id="CircleShape2D_erng2"]
 radius = 380.426
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_ptn1n"]
+radius = 50.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_26jdg"]
+
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_layer = 2
 collision_mask = 4
@@ -169,10 +174,26 @@ collision_mask = 4
 [node name="AreaDetection" type="CollisionShape2D" parent="Detector"]
 shape = SubResource("CircleShape2D_erng2")
 
+[node name="GrabItems" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+
+[node name="Collision" type="CollisionShape2D" parent="GrabItems"]
+shape = SubResource("CircleShape2D_ptn1n")
+
+[node name="CollectItems" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+
+[node name="Collision" type="CollisionShape2D" parent="CollectItems"]
+shape = SubResource("CircleShape2D_26jdg")
+
 [connection signal="timeout" from="FireTimer" to="." method="_on_fire_timer_timeout"]
 [connection signal="timeout" from="NovaTimer" to="." method="_on_nova_timer_timeout"]
 [connection signal="hurt" from="Hurtbox" to="." method="_on_hurtbox_hurt"]
 [connection signal="body_entered" from="Detector" to="." method="_on_detector_body_entered"]
 [connection signal="body_exited" from="Detector" to="." method="_on_detector_body_exited"]
+[connection signal="area_entered" from="GrabItems" to="." method="_on_grab_items_area_entered"]
+[connection signal="area_entered" from="CollectItems" to="." method="_on_collect_items_area_entered"]
 
 [editable path="Hurtbox"]

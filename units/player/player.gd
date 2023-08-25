@@ -83,3 +83,13 @@ func _on_nova_timer_timeout():
 	var nova = Nova.instantiate()
 	nova.position = position
 	add_child(nova)
+
+
+func _on_grab_items_area_entered(area):
+	if area.is_in_group("loot"):
+		area.target = self
+
+
+func _on_collect_items_area_entered(area):
+	if area.is_in_group("loot"):
+		var exp_points = area.collect()
