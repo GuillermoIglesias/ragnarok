@@ -2,17 +2,31 @@ extends CharacterBody2D
 
 @export var speed = 100
 @export var health = 100
+@export var max_health = 100
+
+@export var level = 1
+@export var experience = 0
+@export var collected_exp = 0
+
 @export var enable_spells = true
 
 var target = position
 var mobs_close = []
 
+# Spells
 @onready var Fire = preload("res://spells/fire.tscn")
 @onready var Nova = preload("res://spells/nova.tscn")
+
+# GUI
+@onready var exp_bar = $GUILayer/GUI/ExpBar
+@onready var level_label = $GUILayer/GUI/ExpBar/Level
+
 @onready var anim = $AnimatedSprite
 
 
 func _ready():
+	level_label.text = str("Level ", level)
+	set_exp_bar(experience, calc_exp_cap())
 	anim.play("idle")
 
 
@@ -93,3 +107,42 @@ func _on_grab_items_area_entered(area):
 func _on_collect_items_area_entered(area):
 	if area.is_in_group("loot"):
 		var exp_points = area.collect()
+		calc_exp(exp_points)
+
+func calc_exp(exp_points):
+	var exp_required = calc_exp_cap()
+	collected_exp += exp_points
+
+	# Level Up!
+	if experience + collected_exp >= exp_required:
+		collected_exp -= exp_required - experience
+		level += 1
+		experience = 0
+		exp_required = calc_exp_cap()
+		level_up()
+	else:
+		experience += collected_exp
+		collected_exp = 0
+
+	set_exp_bar(experience, exp_required)
+
+
+func level_up():
+	level_label.text = str("Level ", level)
+
+
+func calc_exp_cap():
+	var exp_cap = level
+
+	if level < 20:
+		exp_cap = level * 5
+	elif level < 40:
+		exp_cap = 95 * (level - 19) * 8
+	else:
+		exp_cap = 255 + (level - 39) * 12
+
+	return exp_cap
+
+func set_exp_bar(set_value, set_max_value):
+	exp_bar.value = set_value
+	exp_bar.max_value = set_max_value

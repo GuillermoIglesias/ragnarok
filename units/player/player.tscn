@@ -1,9 +1,11 @@
-[gd_scene load_steps=25 format=3 uid="uid://bh4ukwstrbqhb"]
+[gd_scene load_steps=27 format=3 uid="uid://bh4ukwstrbqhb"]
 
 [ext_resource type="Script" path="res://units/player/player.gd" id="1_b1vfs"]
 [ext_resource type="Texture2D" uid="uid://bkf325buucdwf" path="res://assets/textures/player/player_idle.png" id="2_6yahn"]
 [ext_resource type="Texture2D" uid="uid://ipjdp6e1mhyd" path="res://assets/textures/player/player_walk.png" id="3_6hsme"]
 [ext_resource type="PackedScene" uid="uid://0snat8gew3f2" path="res://utility/hurtbox.tscn" id="4_16c7j"]
+[ext_resource type="Texture2D" uid="uid://b7sjjru25r26s" path="res://assets/textures/GUI/exp_background.png" id="5_uyo5b"]
+[ext_resource type="Texture2D" uid="uid://cnryh4cv5nm8i" path="res://assets/textures/GUI/exp_progress.png" id="6_58a1q"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8h5bo"]
 atlas = ExtResource("2_6yahn")
@@ -146,6 +148,7 @@ frame_progress = 0.537721
 speed_scale = 2.0
 
 [node name="Collision" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("CapsuleShape2D_na0qv")
 
 [node name="FireTimer" type="Timer" parent="."]
@@ -158,6 +161,7 @@ autostart = true
 [node name="Camera" type="Camera2D" parent="."]
 
 [node name="Hurtbox" parent="." instance=ExtResource("4_16c7j")]
+visible = false
 collision_layer = 0
 collision_mask = 2
 HurtboxTypes = 0
@@ -175,6 +179,7 @@ collision_mask = 4
 shape = SubResource("CircleShape2D_erng2")
 
 [node name="GrabItems" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 8
 
@@ -182,11 +187,44 @@ collision_mask = 8
 shape = SubResource("CircleShape2D_ptn1n")
 
 [node name="CollectItems" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 8
 
 [node name="Collision" type="CollisionShape2D" parent="CollectItems"]
 shape = SubResource("CircleShape2D_26jdg")
+
+[node name="GUILayer" type="CanvasLayer" parent="."]
+
+[node name="GUI" type="Control" parent="GUILayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 4
+
+[node name="ExpBar" type="TextureProgressBar" parent="GUILayer/GUI"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 20.0
+grow_horizontal = 2
+texture_under = ExtResource("5_uyo5b")
+texture_progress = ExtResource("6_58a1q")
+
+[node name="Level" type="Label" parent="GUILayer/GUI/ExpBar"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -80.0
+offset_bottom = 23.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 14
+text = "Level 999"
 
 [connection signal="timeout" from="FireTimer" to="." method="_on_fire_timer_timeout"]
 [connection signal="timeout" from="NovaTimer" to="." method="_on_nova_timer_timeout"]
