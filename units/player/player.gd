@@ -50,7 +50,9 @@ func movement():
 
 func _on_hurtbox_hurt(damage):
 	health -= damage
-	print(health)
+	print("Health:", health)
+	if health <= 0:
+		death()
 
 
 func _on_detector_body_entered(body):
@@ -146,3 +148,7 @@ func calc_exp_cap():
 func set_exp_bar(set_value, set_max_value):
 	exp_bar.value = set_value
 	exp_bar.max_value = set_max_value
+
+
+func death():
+	var _level = get_tree().change_scene_to_file("res://menu/main.tscn")
