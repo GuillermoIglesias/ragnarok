@@ -1,0 +1,90 @@
+[gd_scene load_steps=13 format=3 uid="uid://du00vs50u3a33"]
+
+[ext_resource type="Script" path="res://units/mob/goat.gd" id="1_20nfx"]
+[ext_resource type="Texture2D" uid="uid://bhox8i5sles05" path="res://assets/textures/monsters/goat_walk.png" id="1_awhoo"]
+[ext_resource type="PackedScene" uid="uid://0snat8gew3f2" path="res://utility/hurtbox.tscn" id="3_6xfaf"]
+[ext_resource type="PackedScene" uid="uid://q3kkxsxubxrt" path="res://utility/hitbox.tscn" id="4_1s1dd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fty4g"]
+atlas = ExtResource("1_awhoo")
+region = Rect2(0, 0, 640, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yrsng"]
+atlas = ExtResource("1_awhoo")
+region = Rect2(640, 0, 640, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2mtny"]
+atlas = ExtResource("1_awhoo")
+region = Rect2(1280, 0, 640, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t4a1s"]
+atlas = ExtResource("1_awhoo")
+region = Rect2(1920, 0, 640, 640)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jfaar"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fty4g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yrsng")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2mtny")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t4a1s")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 8.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x2b1n"]
+radius = 18.0278
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kqs7v"]
+radius = 24.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cl7ja"]
+radius = 28.0
+
+[node name="Goat" type="CharacterBody2D" groups=["mobs"]]
+collision_layer = 4
+collision_mask = 2
+motion_mode = 1
+script = ExtResource("1_20nfx")
+
+[node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(0.2, 0.2)
+sprite_frames = SubResource("SpriteFrames_jfaar")
+animation = &"walk"
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(3, 10)
+shape = SubResource("CircleShape2D_x2b1n")
+
+[node name="VisibleOnScreen" type="VisibleOnScreenEnabler2D" parent="."]
+position = Vector2(3, 10)
+enable_node_path = NodePath("../Hitbox/Collision")
+
+[node name="Hitbox" parent="." groups=["attack"] instance=ExtResource("4_1s1dd")]
+collision_layer = 2
+damage = 10
+
+[node name="Collision" parent="Hitbox" index="0"]
+position = Vector2(3, 10)
+shape = SubResource("CircleShape2D_kqs7v")
+
+[node name="Hurtbox" parent="." instance=ExtResource("3_6xfaf")]
+
+[node name="Collision" parent="Hurtbox" index="0"]
+position = Vector2(3, 10)
+shape = SubResource("CircleShape2D_cl7ja")
+
+[connection signal="hurt" from="Hurtbox" to="." method="_on_hurtbox_hurt"]
+
+[editable path="Hitbox"]
+[editable path="Hurtbox"]

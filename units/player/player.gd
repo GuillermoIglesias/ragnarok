@@ -10,7 +10,8 @@ extends CharacterBody2D
 
 @export var enable_spells = true
 
-var target = position
+var mouse_enabled = false
+var target = global_position
 var mobs_close = []
 
 # Spells
@@ -38,17 +39,38 @@ func _process(_delta):
 
 
 func movement():
-	velocity = position.direction_to(target) * speed
+	if Input.is_action_just_pressed("left_click"):
+		mouse_enabled = true
 
-	if position.distance_to(target) > 10:
-		move_and_slide()
-		anim.play("walk")
+	if mouse_enabled:
+		velocity = global_position.direction_to(target) * speed
+
+		if global_position.distance_to(target) > 10:
+			move_and_slide()
+			anim.play("walk")
+		else:
+			anim.play("idle")
+
+		if Input.is_action_pressed("left_click"):
+			target = get_global_mouse_position()
+			var mouse_x = get_viewport().get_mouse_position().x
+			var center_x = get_viewport_rect().get_center().x
+			anim.flip_h = mouse_x < center_x
+
+		if Input.is_action_just_pressed("keyboard_movement"):
+			mouse_enabled = false
+
 	else:
-		anim.play("idle")
+		var mov = Input.get_vector("left", "right", "up", "down")
+		velocity = mov.normalized() * speed
 
-	if Input.is_action_pressed("left_click"):
-		target = get_global_mouse_position()
-		anim.flip_h = get_local_mouse_position().x < 0
+		move_and_slide()
+
+		if mov.length() != 0:
+			anim.flip_h = mov.x < 0
+			anim.play("walk")
+		else:
+			anim.play("idle")
 
 
 func input():
