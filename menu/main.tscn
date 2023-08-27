@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://c78gl80tc0sw7"]
+[gd_scene load_steps=3 format=3 uid="uid://c78gl80tc0sw7"]
 
 [ext_resource type="Script" path="res://menu/main.gd" id="1_uaop0"]
+[ext_resource type="PackedScene" uid="uid://dx1cp2udrmlu8" path="res://menu/button.tscn" id="2_g4iid"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -38,35 +39,22 @@ text = "Ragnarok Survivors"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Start" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -40.0
-offset_top = 44.0
-offset_right = 40.0
-offset_bottom = 79.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Start" parent="." instance=ExtResource("2_g4iid")]
+layout_mode = 0
+offset_left = 280.0
+offset_top = 224.0
+offset_right = 360.0
+offset_bottom = 259.0
 text = "Start"
 
-[node name="Exit" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -40.0
-offset_top = -80.0
-offset_right = 40.0
-offset_bottom = -45.0
-grow_horizontal = 2
-grow_vertical = 0
-text = "Exit"
+[node name="Exit" parent="." instance=ExtResource("2_g4iid")]
+layout_mode = 0
+offset_left = 280.0
+offset_top = 280.0
+offset_right = 360.0
+offset_bottom = 315.0
+text = "Exit
+"
 
 [connection signal="pressed" from="Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="Exit" to="." method="_on_exit_pressed"]

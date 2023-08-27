@@ -20,6 +20,7 @@ var mobs_close = []
 # GUI
 @onready var exp_bar = $GUILayer/GUI/ExpBar
 @onready var level_label = $GUILayer/GUI/ExpBar/Level
+@onready var pause_menu = $GUILayer/GUI/Pause
 
 @onready var anim = $AnimatedSprite
 
@@ -27,11 +28,13 @@ var mobs_close = []
 func _ready():
 	level_label.text = str("Level ", level)
 	set_exp_bar(experience, calc_exp_cap())
+	pause_menu.visible = false
 	anim.play("idle")
 
 
 func _process(_delta):
 	movement()
+	input()
 
 
 func movement():
@@ -46,6 +49,17 @@ func movement():
 	if Input.is_action_pressed("left_click"):
 		target = get_global_mouse_position()
 		anim.flip_h = get_local_mouse_position().x < 0
+
+
+func input():
+	if Input.is_action_just_pressed("pause"):
+		get_tree().paused = true
+		pause_menu.visible = true
+
+
+func _on_continue_pressed():
+	pause_menu.visible = false
+	get_tree().paused = false
 
 
 func _on_hurtbox_hurt(damage):
@@ -96,9 +110,10 @@ func get_closest_mob():
 
 
 func _on_nova_timer_timeout():
-	var nova = Nova.instantiate()
-	nova.position = position
-	add_child(nova)
+	if enable_spells:
+		var nova = Nova.instantiate()
+		nova.position = position
+		add_child(nova)
 
 
 func _on_grab_items_area_entered(area):
@@ -152,3 +167,5 @@ func set_exp_bar(set_value, set_max_value):
 
 func death():
 	var _level = get_tree().change_scene_to_file("res://menu/main.tscn")
+
+

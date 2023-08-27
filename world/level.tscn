@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://c4baxc4b6jt5i"]
+[gd_scene load_steps=11 format=3 uid="uid://c4baxc4b6jt5i"]
 
 [ext_resource type="Script" path="res://world/level.gd" id="1_rhnw3"]
 [ext_resource type="Texture2D" uid="uid://ycesjengxss6" path="res://assets/textures/terrain/tileset1.png" id="2_wa2q3"]
@@ -578,18 +578,10 @@ pattern_0 = SubResource("TileMapPattern_hrcay")
 [sub_resource type="Resource" id="Resource_hfuqy"]
 script = ExtResource("6_7dljh")
 time_start = 0
-time_end = 60
-mob = ExtResource("5_m57gb")
-mob_num = 10
-delay = 5
-
-[sub_resource type="Resource" id="Resource_hgcrc"]
-script = ExtResource("6_7dljh")
-time_start = 0
-time_end = 60
+time_end = 300
 mob = ExtResource("5_m57gb")
 mob_num = 1
-delay = 1
+delay = 5
 
 [node name="Level" type="Node2D"]
 texture_filter = 1
@@ -612,6 +604,6 @@ layer_1/tile_data = PackedInt32Array(196588, 0, 0, 262124, 0, 1, 327660, 0, 2, 3
 [node name="Player" parent="." instance=ExtResource("3_8cuki")]
 
 [node name="Spawner" parent="." instance=ExtResource("4_iyq3m")]
-spawns = Array[ExtResource("6_7dljh")]([SubResource("Resource_hfuqy"), SubResource("Resource_hgcrc")])
+spawns = Array[ExtResource("6_7dljh")]([SubResource("Resource_hfuqy")])
 
 [node name="Loot" type="Node2D" parent="." groups=["loot"]]

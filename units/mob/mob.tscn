@@ -177,6 +177,10 @@ collision_layer = 2
 position = Vector2(-0.5, -4)
 shape = SubResource("RectangleShape2D_8vnxw")
 
+[node name="VisibleOnScreen" type="VisibleOnScreenEnabler2D" parent="."]
+position = Vector2(-0.499999, -4.5)
+scale = Vector2(1.35, 1.45)
+
 [connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_animated_sprite_animation_finished"]
 [connection signal="hurt" from="Hurtbox" to="." method="_on_hurtbox_hurt"]
 
