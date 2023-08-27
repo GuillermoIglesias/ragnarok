@@ -7,5 +7,6 @@ class_name SpawnInfo
 @export var mob: Resource
 @export var mob_num: int
 @export var delay: int
+@export var enabled: bool
 
 var delay_counter = 0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://bfxbedho8gx6e"]
+[gd_scene load_steps=4 format=3 uid="uid://dailmfx5xmjwr"]
 
 [ext_resource type="Texture2D" uid="uid://b7sjjru25r26s" path="res://assets/textures/GUI/exp_background.png" id="1_fmoqc"]
 [ext_resource type="Texture2D" uid="uid://cnryh4cv5nm8i" path="res://assets/textures/GUI/exp_progress.png" id="2_d8tgo"]
@@ -37,7 +37,7 @@ theme_override_font_sizes/font_size = 14
 text = "Level 999"
 
 [node name="LevelUp" type="Panel" parent="GUI"]
-visible = false
+process_mode = 2
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -70,15 +70,14 @@ offset_bottom = 100.0
 
 [node name="Pause" type="Panel" parent="GUI"]
 process_mode = 2
-visible = false
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -100.0
-offset_top = 55.0
+offset_top = -300.0
 offset_right = 100.0
-offset_bottom = 305.0
+offset_bottom = -50.0
 grow_horizontal = 2
 
 [node name="Title" type="Label" parent="GUI/Pause"]

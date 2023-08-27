@@ -9,33 +9,50 @@ extends CharacterBody2D
 @export var collected_exp = 0
 
 @export var enable_spells = true
+@export var additional_spells = 3
+
+var fire_base_ammo = 1
+var fire_ammo = 0
+
 
 var mouse_enabled = false
 var target = global_position
 var mobs_close = []
+var mobs_radar = []
+var clock_seconds = 0
 
 # Spells
 @onready var Fire = preload("res://spells/fire.tscn")
 @onready var Nova = preload("res://spells/nova.tscn")
 
+# Upgrades
+@onready var Option = preload("res://menu/option.tscn")
+
 # GUI
 @onready var exp_bar = $GUILayer/GUI/ExpBar
-@onready var level_label = $GUILayer/GUI/ExpBar/Level
+@onready var exp_label = $GUILayer/GUI/ExpBar/Level
+@onready var level_menu = $GUILayer/GUI/LevelUp
+@onready var level_title = $GUILayer/GUI/LevelUp/Title
+@onready var level_options = $GUILayer/GUI/LevelUp/Options
 @onready var pause_menu = $GUILayer/GUI/Pause
+@onready var clock = $GUILayer/GUI/Clock
 
 @onready var anim = $AnimatedSprite
+@onready var fire_timer = $FireCastTimer
 
 
 func _ready():
-	level_label.text = str("Level ", level)
+	exp_label.text = str("Level ", level)
 	set_exp_bar(experience, calc_exp_cap())
+	level_menu.visible = false
 	pause_menu.visible = false
 	anim.play("idle")
+	clock.text = "00:00"
 
 
 func _process(_delta):
 	movement()
-	input()
+	pause()
 
 
 func movement():
@@ -73,15 +90,23 @@ func movement():
 			anim.play("idle")
 
 
-func input():
+func pause():
 	if Input.is_action_just_pressed("pause"):
+		var tween = pause_menu.create_tween()
+		tween.tween_property(pause_menu, "position", Vector2(220, 50), 0.2)
+		tween.set_trans(Tween.TRANS_QUINT)
+		tween.set_ease(Tween.EASE_IN)
+		tween.play()
+
 		get_tree().paused = true
 		pause_menu.visible = true
 
 
 func _on_continue_pressed():
-	pause_menu.visible = false
-	get_tree().paused = false
+	if pause_menu.visible:
+		pause_menu.position = Vector2(220, -300)
+		pause_menu.visible = false
+		get_tree().paused = false
 
 
 func _on_hurtbox_hurt(damage):
@@ -92,30 +117,46 @@ func _on_hurtbox_hurt(damage):
 
 
 func _on_detector_body_entered(body):
-	if not mobs_close.has(body):
-		mobs_close.append(body)
+	if not mobs_radar.has(body):
+		mobs_radar.append(body)
 
 
 func _on_detector_body_exited(body):
-	if mobs_close.has(body):
-		mobs_close.erase(body)
+	if mobs_radar.has(body):
+		mobs_radar.erase(body)
 
 
 func _on_fire_timer_timeout():
-	var closest_mob = get_closest_mob()
-	if closest_mob != null and enable_spells:
-		var fire = Fire.instantiate()
-		fire.look_at(closest_mob)
-		fire.position = position
-		add_child(fire)
+	if enable_spells:
+		mobs_close.clear()
+		fire_ammo = fire_base_ammo + additional_spells
+		fire_timer.start()
+
+
+func _on_fire_cast_timer_timeout():
+	if fire_ammo > 0:
+		var closest_mob = get_closest_mob()
+
+		if closest_mob != null:
+			var fire = Fire.instantiate()
+			fire.look_at(closest_mob)
+			fire.position = position
+			add_child(fire)
+
+			fire_ammo -= 1
+			if fire_ammo > 0:
+				fire_timer.start()
 
 
 func get_closest_mob():
 	var shortest_distance = INF
 	var closest_mob = null
 
-	for mob in mobs_close:
+	for mob in mobs_radar:
 		if not is_instance_valid(mob):
+			continue
+
+		if mobs_close.has(mob):
 			continue
 
 		var distance = position.distance_to(mob.position)
@@ -126,6 +167,7 @@ func get_closest_mob():
 	var relative_mob_direction = null
 
 	if shortest_distance < INF:
+		mobs_close.append(closest_mob)
 		relative_mob_direction = position.direction_to(closest_mob.position)
 
 	return relative_mob_direction
@@ -148,6 +190,7 @@ func _on_collect_items_area_entered(area):
 		var exp_points = area.collect()
 		calc_exp(exp_points)
 
+
 func calc_exp(exp_points):
 	var exp_required = calc_exp_cap()
 	collected_exp += exp_points
@@ -167,7 +210,36 @@ func calc_exp(exp_points):
 
 
 func level_up():
-	level_label.text = str("Level ", level)
+	exp_label.text = str("Level ", level)
+
+	var tween = level_menu.create_tween()
+	tween.tween_property(level_menu, "position", Vector2(220, 50), 0.2)
+	tween.set_trans(Tween.TRANS_QUINT)
+	tween.set_ease(Tween.EASE_IN)
+	tween.play()
+
+	level_menu.visible = true
+	var max_options = 3
+
+	for i in range(max_options):
+		var option_choice = Option.instantiate()
+		option_choice.item = get_random_option()
+		level_options.add_child(option_choice)
+
+	get_tree().paused = true
+
+
+func get_random_option():
+	return null
+
+
+func set_upgrade(_upgrade):
+	var options = level_options.get_children()
+	for option in options:
+		option.queue_free()
+	level_menu.visible = false
+	level_menu.position = Vector2(800, 50)
+	get_tree().paused = false
 
 
 func calc_exp_cap():
@@ -182,6 +254,7 @@ func calc_exp_cap():
 
 	return exp_cap
 
+
 func set_exp_bar(set_value, set_max_value):
 	exp_bar.value = set_value
 	exp_bar.max_value = set_max_value
@@ -191,3 +264,8 @@ func death():
 	var _level = get_tree().change_scene_to_file("res://menu/main.tscn")
 
 
+func _on_level_timer_timeout():
+	clock_seconds += 1
+	var minutes = ("0" + str(int(clock_seconds / 60.0))).right(2)
+	var seconds = ("0" + str(clock_seconds % 60)).right(2)
+	clock.text = minutes + ":" + seconds

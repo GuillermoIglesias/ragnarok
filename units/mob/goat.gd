@@ -8,6 +8,7 @@ extends CharacterBody2D
 @onready var player = get_tree().get_first_node_in_group("player")
 @onready var loot = get_tree().get_first_node_in_group("loot")
 @onready var anim = $AnimatedSprite
+@onready var collision = $Collision
 @onready var hitbox = $Hitbox
 
 @onready var exp_gem = preload("res://items/experience.tscn")
@@ -42,6 +43,7 @@ func damaged(damage):
 func death():
 	speed = 0
 	queue_free()
+	collision.set_deferred("disabled", true)
 	drop_exp()
 
 

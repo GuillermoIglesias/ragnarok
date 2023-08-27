@@ -1,0 +1,68 @@
+[gd_scene load_steps=3 format=3 uid="uid://bxckfh3fqu7w3"]
+
+[ext_resource type="Script" path="res://menu/option.gd" id="1_08oa8"]
+[ext_resource type="Texture2D" uid="uid://cuy4n21f38bjw" path="res://assets/textures/upgrades/items/sword.png" id="1_32i0d"]
+
+[node name="Option" type="ColorRect"]
+custom_minimum_size = Vector2(180, 50)
+anchors_preset = -1
+anchor_right = 0.28125
+anchor_bottom = 0.138889
+color = Color(0.54902, 0.54902, 0.54902, 1)
+script = ExtResource("1_08oa8")
+metadata/_edit_use_anchors_ = true
+
+[node name="Picture" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 26.0
+offset_bottom = 26.0
+color = Color(0, 0, 0, 1)
+
+[node name="Icon" type="TextureRect" parent="Picture"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("1_32i0d")
+metadata/_edit_use_anchors_ = true
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 2.0
+offset_right = 70.0
+offset_bottom = 25.0
+theme_override_font_sizes/font_size = 14
+text = "Sword"
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="."]
+texture_filter = 3
+layout_mode = 0
+offset_left = 4.0
+offset_top = 27.0
+offset_right = 166.0
+offset_bottom = 48.0
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 8
+text = "Adds 10 damage to all yours attacks. Critical chance aumented in 5%."
+autowrap_mode = 2
+
+[node name="Level" type="Label" parent="."]
+layout_mode = 0
+offset_left = 130.0
+offset_top = 3.0
+offset_right = 171.0
+offset_bottom = 26.0
+theme_override_font_sizes/font_size = 12
+text = "Level 99"
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

@@ -10,7 +10,7 @@ extends Node2D
 func _on_timer_timeout():
 	time += 1
 	for spawn in spawns:
-		if time >= spawn.time_start and time <= spawn.time_end:
+		if time >= spawn.time_start and time <= spawn.time_end and spawn.enabled:
 			if spawn.delay_counter < spawn.delay:
 				spawn.delay_counter += 1
 			else:

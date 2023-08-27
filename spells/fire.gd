@@ -4,6 +4,7 @@ var level = 1
 var health = 1
 var speed = 400
 var damage = randi_range(2, 6)
+var size = 1
 
 @onready var anim = $AnimatedSprite
 @onready var collision = $Collision
@@ -11,6 +12,12 @@ var damage = randi_range(2, 6)
 
 func _ready():
 	anim.play("attack")
+
+#	var tween = create_tween()
+#	tween.tween_property(self, "scale", Vector2(1, 1) * size, 1)
+#	tween.set_trans(Tween.TRANS_QUINT)
+#	tween.set_ease(Tween.EASE_OUT)
+#	tween.play()
 
 
 func _process(delta):
