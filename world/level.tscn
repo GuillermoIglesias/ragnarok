@@ -758,12 +758,12 @@ pattern_0 = SubResource("TileMapPattern_hrcay")
 
 [sub_resource type="Resource" id="Resource_hfuqy"]
 script = ExtResource("6_7dljh")
-time_start = 300
+time_start = 0
 time_end = 400
 mob = ExtResource("8_7124p")
 mob_num = 1
-delay = 10
-enabled = false
+delay = 40
+enabled = true
 
 [sub_resource type="Resource" id="Resource_5xrkf"]
 script = ExtResource("6_7dljh")
@@ -774,15 +774,6 @@ mob_num = 5
 delay = 5
 enabled = true
 
-[sub_resource type="Resource" id="Resource_7igsv"]
-script = ExtResource("6_7dljh")
-time_start = 0
-time_end = 300
-mob = ExtResource("8_rwwi0")
-mob_num = 3
-delay = 0
-enabled = true
-
 [sub_resource type="Resource" id="Resource_cgh7i"]
 script = ExtResource("6_7dljh")
 time_start = 0
@@ -790,6 +781,15 @@ time_end = 300
 mob = ExtResource("8_rwwi0")
 mob_num = 2
 delay = 1
+enabled = true
+
+[sub_resource type="Resource" id="Resource_7igsv"]
+script = ExtResource("6_7dljh")
+time_start = 0
+time_end = 300
+mob = ExtResource("8_rwwi0")
+mob_num = 3
+delay = 0
 enabled = true
 
 [node name="Level" type="Node2D"]
@@ -812,6 +812,6 @@ layer_1/tile_data = PackedInt32Array(-720915, 0, 0, -655379, 0, 1, -589843, 0, 2
 [node name="Player" parent="." instance=ExtResource("3_8cuki")]
 
 [node name="Spawner" parent="." instance=ExtResource("4_iyq3m")]
-spawns = Array[ExtResource("6_7dljh")]([SubResource("Resource_hfuqy"), SubResource("Resource_5xrkf"), SubResource("Resource_7igsv"), SubResource("Resource_cgh7i")])
+spawns = Array[ExtResource("6_7dljh")]([SubResource("Resource_hfuqy"), SubResource("Resource_5xrkf"), SubResource("Resource_cgh7i"), SubResource("Resource_7igsv")])
 
 [node name="Loot" type="Node2D" parent="." groups=["loot"]]

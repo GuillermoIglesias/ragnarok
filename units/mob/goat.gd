@@ -1,9 +1,9 @@
 extends CharacterBody2D
 
-@export var speed = 25
+@export var speed = 40
 @export var health = 100
 @export var attack = 10
-@export var exp_points = 20
+@export var exp_points = 25
 
 @onready var player = get_tree().get_first_node_in_group("player")
 @onready var loot = get_tree().get_first_node_in_group("loot")

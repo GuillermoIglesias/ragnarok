@@ -1,5 +1,5 @@
 # Custom ignore
-.exports/
+exports/
 
 # Godot 4+ specific ignores
 .godot/

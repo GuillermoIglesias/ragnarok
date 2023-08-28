@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var base_speed = 50.0
+@export var base_speed = 60.0
 @export var speed = base_speed
 @export var health = 100
 @export var max_health = 100
@@ -36,6 +36,7 @@ var clock_seconds = 0
 @onready var Option = preload("res://menu/option.tscn")
 
 # GUI
+@onready var health_bar = $GUILayer/GUI/HealthBar
 @onready var exp_bar = $GUILayer/GUI/ExpBar
 @onready var exp_label = $GUILayer/GUI/ExpBar/Level
 @onready var level_menu = $GUILayer/GUI/LevelUp
@@ -54,6 +55,7 @@ var clock_seconds = 0
 func _ready():
 	exp_label.text = str("Level ", level)
 	set_exp_bar(experience, calc_exp_cap())
+	set_health_bar(health, max_health)
 	level_menu.visible = false
 	pause_menu.visible = false
 	anim.play("idle")
@@ -126,8 +128,8 @@ func _on_continue_pressed():
 
 
 func _on_hurtbox_hurt(damage):
-	health -= damage - armor
-	print("Health:", health)
+	health -= clamp(damage - armor, 1, 999)
+	set_health_bar(health, max_health)
 	if health <= 0:
 		death()
 
@@ -295,6 +297,7 @@ func set_upgrade(upgrade):
 	elif upgrade.begins_with("food"):
 		health += 20
 		clamp(health, 0, max_health)
+		set_health_bar(health, max_health)
 
 	var options = level_options.get_children()
 	for option in options:
@@ -326,6 +329,10 @@ func calc_exp_cap():
 func set_exp_bar(set_value, set_max_value):
 	exp_bar.value = set_value
 	exp_bar.max_value = set_max_value
+
+func set_health_bar(set_value, set_max_value):
+	health_bar.value = set_value
+	health_bar.max_value = set_max_value
 
 
 func death():

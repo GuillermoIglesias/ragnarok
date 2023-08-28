@@ -26,6 +26,22 @@ const UPGRADES = {
 		"requires": ["ring1"],
 		"type": "upgrade",
 	},
+	"ring3": {
+		"icon": ITEM_PATH + "ring.png",
+		"title": "Ring",
+		"details": "Your spells now spawn an additional attack",
+		"level": "Level: 3",
+		"requires": ["ring2"],
+		"type": "upgrade",
+	},
+	"ring4": {
+		"icon": ITEM_PATH + "ring.png",
+		"title": "Ring",
+		"details": "Your spells now spawn an additional attack",
+		"level": "Level: 4",
+		"requires": ["ring3"],
+		"type": "upgrade",
+	},
 	"armor1": {
 		"icon": ITEM_PATH + "helmet.png",
 		"title": "Armor",
