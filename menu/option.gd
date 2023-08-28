@@ -15,13 +15,14 @@ var item = null
 
 func _ready():
 	connect("selected_upgrade", Callable(player, "set_upgrade"))
-#	player.selected_upgrade.connect(set_upgrade)
-#	if item == null:
-#		item = "food"
-#	lblName.text = UpgradeDb.UPGRADES[item]["displayname"]
-#	lblDescription.text = UpgradeDb.UPGRADES[item]["details"]
-#	lblLevel.text = UpgradeDb.UPGRADES[item]["level"]
-#	itemIcon.texture = load(UpgradeDb.UPGRADES[item]["icon"])
+
+	if item == null:
+		item = "food"
+
+	title.text = UpgradeDB.UPGRADES[item]["title"]
+	description.text = UpgradeDB.UPGRADES[item]["details"]
+	level.text = UpgradeDB.UPGRADES[item]["level"]
+	icon.texture = load(UpgradeDB.UPGRADES[item]["icon"])
 
 
 func _process(_delta):

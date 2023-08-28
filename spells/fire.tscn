@@ -91,9 +91,7 @@ metadata/_edit_group_ = true
 texture_filter = 1
 rotation = 3.14159
 sprite_frames = SubResource("SpriteFrames_em7u5")
-animation = &"damage"
-frame = 3
-frame_progress = 1.0
+animation = &"attack"
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 rotation = 1.5708

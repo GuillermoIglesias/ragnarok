@@ -4,7 +4,9 @@ var level = 1
 var health = 1
 var speed = 400
 var damage = randi_range(2, 6)
-var size = 1
+var size = 1.0
+
+@onready var player = get_tree().get_first_node_in_group("player")
 
 @onready var anim = $AnimatedSprite
 @onready var collision = $Collision
@@ -13,11 +15,13 @@ var size = 1
 func _ready():
 	anim.play("attack")
 
-#	var tween = create_tween()
-#	tween.tween_property(self, "scale", Vector2(1, 1) * size, 1)
-#	tween.set_trans(Tween.TRANS_QUINT)
-#	tween.set_ease(Tween.EASE_OUT)
-#	tween.play()
+	size = 1.0 * (1 + player.spell_size)
+
+	var tween = create_tween()
+	tween.tween_property(self, "scale", Vector2(1, 1) * size, 1)
+	tween.set_trans(Tween.TRANS_QUINT)
+	tween.set_ease(Tween.EASE_OUT)
+	tween.play()
 
 
 func _process(delta):

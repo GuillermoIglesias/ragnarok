@@ -1,19 +1,26 @@
 extends CharacterBody2D
 
-@export var speed = 100
+@export var base_speed = 50.0
+@export var speed = base_speed
 @export var health = 100
 @export var max_health = 100
+@export var armor = 0
+
+@export var spell_size = 0
+@export var spell_cooldown = 0
 
 @export var level = 1
 @export var experience = 0
 @export var collected_exp = 0
 
 @export var enable_spells = true
-@export var additional_spells = 3
+@export var additional_spells = 0
 
 var fire_base_ammo = 1
 var fire_ammo = 0
 
+var upgrade_options = []
+var collected_upgrades = []
 
 var mouse_enabled = false
 var target = global_position
@@ -38,7 +45,10 @@ var clock_seconds = 0
 @onready var clock = $GUILayer/GUI/Clock
 
 @onready var anim = $AnimatedSprite
-@onready var fire_timer = $FireCastTimer
+@onready var fire_timer = $FireTimer
+@onready var nova_timer = $NovaTimer
+@onready var fire_cast_timer = $FireCastTimer
+
 
 
 func _ready():
@@ -48,6 +58,7 @@ func _ready():
 	pause_menu.visible = false
 	anim.play("idle")
 	clock.text = "00:00"
+	set_spell_timers()
 
 
 func _process(_delta):
@@ -90,6 +101,11 @@ func movement():
 			anim.play("idle")
 
 
+func set_spell_timers():
+	fire_timer.wait_time *= (1 - spell_cooldown)
+	nova_timer.wait_time *= (1 - spell_cooldown)
+
+
 func pause():
 	if Input.is_action_just_pressed("pause"):
 		var tween = pause_menu.create_tween()
@@ -110,7 +126,7 @@ func _on_continue_pressed():
 
 
 func _on_hurtbox_hurt(damage):
-	health -= damage
+	health -= damage - armor
 	print("Health:", health)
 	if health <= 0:
 		death()
@@ -130,7 +146,7 @@ func _on_fire_timer_timeout():
 	if enable_spells:
 		mobs_close.clear()
 		fire_ammo = fire_base_ammo + additional_spells
-		fire_timer.start()
+		fire_cast_timer.start()
 
 
 func _on_fire_cast_timer_timeout():
@@ -145,7 +161,7 @@ func _on_fire_cast_timer_timeout():
 
 			fire_ammo -= 1
 			if fire_ammo > 0:
-				fire_timer.start()
+				fire_cast_timer.start()
 
 
 func get_closest_mob():
@@ -230,16 +246,68 @@ func level_up():
 
 
 func get_random_option():
+	var dblist = []
+
+	for up in UpgradeDB.UPGRADES:
+		# Check if Upgrade already collected
+		if up in collected_upgrades:
+			continue
+
+		# Check if Upgrade is already an option
+		if up in upgrade_options:
+			continue
+
+		# Check if Upgrade is not an item (ie. Food)
+		if UpgradeDB.UPGRADES[up]["type"] == "item":
+			continue
+
+		# Check if PreRequisites are fullfil
+		if UpgradeDB.UPGRADES[up]["requires"].size() > 0:
+			var to_add = true
+			for requisite in UpgradeDB.UPGRADES[up]["requires"]:
+				if not requisite in collected_upgrades:
+					to_add = false
+			if not to_add:
+				continue
+
+		dblist.append(up)
+
+	if dblist.size() > 0:
+		var random_option = dblist.pick_random()
+		upgrade_options.append(random_option)
+		return random_option
+
 	return null
 
 
-func set_upgrade(_upgrade):
+func set_upgrade(upgrade):
+	if upgrade.begins_with("armor"):
+		armor += 1
+	elif upgrade.begins_with("speed"):
+		speed += base_speed * 0.5
+	elif upgrade.begins_with("tome"):
+		spell_size += 0.10
+	elif upgrade.begins_with("scroll"):
+		spell_cooldown += 0.05
+		set_spell_timers()
+	elif upgrade.begins_with("ring"):
+		additional_spells += 1
+	elif upgrade.begins_with("food"):
+		health += 20
+		clamp(health, 0, max_health)
+
 	var options = level_options.get_children()
 	for option in options:
 		option.queue_free()
+
+	collected_upgrades.append(upgrade)
+	upgrade_options.clear()
+
 	level_menu.visible = false
 	level_menu.position = Vector2(800, 50)
 	get_tree().paused = false
+
+	calc_exp(0)
 
 
 func calc_exp_cap():
