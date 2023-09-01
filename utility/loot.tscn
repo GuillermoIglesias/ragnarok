@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://bmka0wpulg0t8"]
+
+[ext_resource type="Script" path="res://utility/loot.gd" id="1_cwi6x"]
+[ext_resource type="PackedScene" uid="uid://c4noojkdqonq3" path="res://items/experience.tscn" id="2_6s0lb"]
+
+[node name="Loot" type="Node"]
+script = ExtResource("1_cwi6x")
+exp_scene = ExtResource("2_6s0lb")

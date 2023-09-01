@@ -1,8 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://du00vs50u3a33"]
+[gd_scene load_steps=15 format=3 uid="uid://du00vs50u3a33"]
 
 [ext_resource type="Script" path="res://units/mob/goat.gd" id="1_20nfx"]
 [ext_resource type="Texture2D" uid="uid://bhox8i5sles05" path="res://assets/textures/monsters/goat_walk.png" id="1_awhoo"]
+[ext_resource type="PackedScene" uid="uid://bi0b6s5cj150p" path="res://utility/health.tscn" id="2_ave7c"]
 [ext_resource type="PackedScene" uid="uid://0snat8gew3f2" path="res://utility/hurtbox.tscn" id="3_6xfaf"]
+[ext_resource type="PackedScene" uid="uid://bmka0wpulg0t8" path="res://utility/loot.tscn" id="3_ic7ij"]
 [ext_resource type="PackedScene" uid="uid://q3kkxsxubxrt" path="res://utility/hitbox.tscn" id="4_1s1dd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fty4g"]
@@ -56,6 +58,16 @@ collision_mask = 6
 motion_mode = 1
 script = ExtResource("1_20nfx")
 
+[node name="Health" parent="." node_paths=PackedStringArray("hurtbox") instance=ExtResource("2_ave7c")]
+max_health = 100
+hurtbox = NodePath("../Hurtbox")
+
+[node name="Loot" parent="." node_paths=PackedStringArray("health") instance=ExtResource("3_ic7ij")]
+exp_points = 25.0
+bonus_chance = 0.231
+bonus_amount = 1.2
+health = NodePath("../Health")
+
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 scale = Vector2(0.2, 0.2)
@@ -79,12 +91,6 @@ shape = SubResource("CircleShape2D_kqs7v")
 [node name="Collision" parent="Hurtbox" index="0"]
 position = Vector2(3, 10)
 shape = SubResource("CircleShape2D_cl7ja")
-
-[node name="VisibleOnScreen" type="VisibleOnScreenEnabler2D" parent="."]
-position = Vector2(3, 10.5)
-scale = Vector2(3.1, 3.15)
-
-[connection signal="hurt" from="Hurtbox" to="." method="_on_hurtbox_hurt"]
 
 [editable path="Hitbox"]
 [editable path="Hurtbox"]

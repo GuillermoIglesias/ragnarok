@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 UpgradeDB="*res://utility/upgrade_db.tscn"
+Events="*res://utility/events.gd"
 
 [display]
 

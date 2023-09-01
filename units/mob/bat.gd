@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var speed: int = 60
+@export var speed: int = 30
 
 var alive: bool = true
 
@@ -31,19 +31,17 @@ func _process(_delta):
 func _on_died():
 	speed = 0
 	alive = false
+	anim.play("death")
 	collision.set_deferred("disabled", true)
-	queue_free()
 
 
 func _on_health_changed(health_amount: int):
 	if health_amount < 0:
-#		anim.play("damaged")
-		pass
+		anim.play("damaged")
 
 
-#func _on_animated_sprite_animation_finished():
-#	if anim.animation == "death":
-#		queue_free()
-#	elif anim.animation == "damaged":
-#		anim.play("walk")
-
+func _on_animated_sprite_animation_finished():
+	if anim.animation == "death":
+		queue_free()
+	elif anim.animation == "damaged":
+		anim.play("walk")
