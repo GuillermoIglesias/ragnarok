@@ -7,7 +7,7 @@ var exp_blue = preload("res://assets/textures/items/exp_blue.png")
 var exp_red = preload("res://assets/textures/items/exp_red.png")
 
 var target = null
-var speed = -1
+var speed = -0.5
 
 @onready var sprite = $Sprite
 @onready var collision = $Collision
@@ -23,7 +23,7 @@ func _ready():
 func _process(delta):
 	if target != null:
 		global_position = global_position.move_toward(target.global_position, speed)
-		speed += 2 * delta
+		speed += 4 * delta
 
 func collect():
 	collision.set_deferred("disabled", true)

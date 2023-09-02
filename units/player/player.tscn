@@ -1,9 +1,10 @@
-[gd_scene load_steps=30 format=3 uid="uid://bh4ukwstrbqhb"]
+[gd_scene load_steps=31 format=3 uid="uid://bh4ukwstrbqhb"]
 
 [ext_resource type="Script" path="res://units/player/player.gd" id="1_b1vfs"]
 [ext_resource type="Texture2D" uid="uid://bkf325buucdwf" path="res://assets/textures/player/player_idle.png" id="2_6yahn"]
 [ext_resource type="Texture2D" uid="uid://ipjdp6e1mhyd" path="res://assets/textures/player/player_walk.png" id="3_6hsme"]
 [ext_resource type="PackedScene" uid="uid://0snat8gew3f2" path="res://utility/hurtbox.tscn" id="4_16c7j"]
+[ext_resource type="PackedScene" uid="uid://bi0b6s5cj150p" path="res://utility/health.tscn" id="4_38wwo"]
 [ext_resource type="Texture2D" uid="uid://b7sjjru25r26s" path="res://assets/textures/GUI/exp_background.png" id="5_iccq2"]
 [ext_resource type="Texture2D" uid="uid://cnryh4cv5nm8i" path="res://assets/textures/GUI/exp_progress.png" id="6_41pk2"]
 [ext_resource type="PackedScene" uid="uid://dx1cp2udrmlu8" path="res://menu/button.tscn" id="7_nni0k"]
@@ -125,11 +126,11 @@ animations = [{
 radius = 4.0
 height = 22.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_7crn3"]
-size = Vector2(12, 26)
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_erng2"]
 radius = 380.426
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7crn3"]
+size = Vector2(12, 26)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ptn1n"]
 radius = 50.0
@@ -155,14 +156,32 @@ speed_scale = 2.0
 visible = false
 shape = SubResource("CapsuleShape2D_na0qv")
 
-[node name="FireTimer" type="Timer" parent="."]
+[node name="Health" parent="." node_paths=PackedStringArray("hurtbox") instance=ExtResource("4_38wwo")]
+max_health = 100
+hurtbox = NodePath("../Hurtbox")
+
+[node name="Attacks" type="Node" parent="."]
+
+[node name="Fireball" type="Node" parent="Attacks"]
+
+[node name="Detector" type="Area2D" parent="Attacks/Fireball"]
+visible = false
+collision_layer = 0
+collision_mask = 4
+
+[node name="AreaDetection" type="CollisionShape2D" parent="Attacks/Fireball/Detector"]
+shape = SubResource("CircleShape2D_erng2")
+
+[node name="FireTimer" type="Timer" parent="Attacks/Fireball"]
 autostart = true
 
-[node name="FireCastTimer" type="Timer" parent="."]
+[node name="FireCastTimer" type="Timer" parent="Attacks/Fireball"]
 wait_time = 0.075
 one_shot = true
 
-[node name="NovaTimer" type="Timer" parent="."]
+[node name="Icenova" type="Node" parent="Attacks"]
+
+[node name="NovaTimer" type="Timer" parent="Attacks/Icenova"]
 wait_time = 5.0
 autostart = true
 
@@ -177,14 +196,6 @@ HurtboxTypes = 0
 [node name="Collision" parent="Hurtbox" index="0"]
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_7crn3")
-
-[node name="Detector" type="Area2D" parent="."]
-visible = false
-collision_layer = 0
-collision_mask = 4
-
-[node name="AreaDetection" type="CollisionShape2D" parent="Detector"]
-shape = SubResource("CircleShape2D_erng2")
 
 [node name="GrabItems" type="Area2D" parent="."]
 visible = false
@@ -327,18 +338,17 @@ text = "00:00"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelTimer" type="Timer" parent="."]
+[node name="LevelTimer" type="Timer" parent="GUILayer/GUI"]
 autostart = true
 
-[connection signal="timeout" from="FireTimer" to="." method="_on_fire_timer_timeout"]
-[connection signal="timeout" from="FireCastTimer" to="." method="_on_fire_cast_timer_timeout"]
-[connection signal="timeout" from="NovaTimer" to="." method="_on_nova_timer_timeout"]
-[connection signal="hurt" from="Hurtbox" to="." method="_on_hurtbox_hurt"]
-[connection signal="body_entered" from="Detector" to="." method="_on_detector_body_entered"]
-[connection signal="body_exited" from="Detector" to="." method="_on_detector_body_exited"]
+[connection signal="body_entered" from="Attacks/Fireball/Detector" to="." method="_on_detector_body_entered"]
+[connection signal="body_exited" from="Attacks/Fireball/Detector" to="." method="_on_detector_body_exited"]
+[connection signal="timeout" from="Attacks/Fireball/FireTimer" to="." method="_on_fire_timer_timeout"]
+[connection signal="timeout" from="Attacks/Fireball/FireCastTimer" to="." method="_on_fire_cast_timer_timeout"]
+[connection signal="timeout" from="Attacks/Icenova/NovaTimer" to="." method="_on_nova_timer_timeout"]
 [connection signal="area_entered" from="GrabItems" to="." method="_on_grab_items_area_entered"]
 [connection signal="area_entered" from="CollectItems" to="." method="_on_collect_items_area_entered"]
 [connection signal="pressed" from="GUILayer/GUI/Pause/Continue" to="." method="_on_continue_pressed"]
-[connection signal="timeout" from="LevelTimer" to="." method="_on_level_timer_timeout"]
+[connection signal="timeout" from="GUILayer/GUI/LevelTimer" to="." method="_on_level_timer_timeout"]
 
 [editable path="Hurtbox"]

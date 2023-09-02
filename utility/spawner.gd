@@ -2,9 +2,9 @@ extends Node2D
 
 @export var spawns: Array[SpawnInfo] = []
 
-@onready var player = get_tree().get_first_node_in_group("player")
+@onready var player: CharacterBody2D = get_tree().get_first_node_in_group("player")
 
-@export var time = 0
+var time: int = 0
 
 
 func _on_timer_timeout():

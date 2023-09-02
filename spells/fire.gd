@@ -2,7 +2,7 @@ extends Area2D
 
 var level = 1
 var health = 1
-var speed = 400
+var speed = 500
 var damage = randi_range(2, 6)
 var size = 1.0
 
