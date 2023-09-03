@@ -1,26 +1,26 @@
 [gd_scene load_steps=15 format=3 uid="uid://du00vs50u3a33"]
 
-[ext_resource type="Script" path="res://units/mob/goat.gd" id="1_20nfx"]
-[ext_resource type="Texture2D" uid="uid://bhox8i5sles05" path="res://assets/textures/monsters/goat_walk.png" id="1_awhoo"]
-[ext_resource type="PackedScene" uid="uid://bi0b6s5cj150p" path="res://utility/health.tscn" id="2_ave7c"]
-[ext_resource type="PackedScene" uid="uid://0snat8gew3f2" path="res://utility/hurtbox.tscn" id="3_6xfaf"]
-[ext_resource type="PackedScene" uid="uid://bmka0wpulg0t8" path="res://utility/loot.tscn" id="3_ic7ij"]
-[ext_resource type="PackedScene" uid="uid://q3kkxsxubxrt" path="res://utility/hitbox.tscn" id="4_1s1dd"]
+[ext_resource type="Script" path="res://mob/goat.gd" id="1_k8fjp"]
+[ext_resource type="PackedScene" uid="uid://bi0b6s5cj150p" path="res://utility/health.tscn" id="2_o2yep"]
+[ext_resource type="PackedScene" uid="uid://bmka0wpulg0t8" path="res://utility/loot.tscn" id="3_u8rl8"]
+[ext_resource type="Texture2D" uid="uid://bhox8i5sles05" path="res://assets/textures/monsters/goat_walk.png" id="4_0gx6h"]
+[ext_resource type="PackedScene" uid="uid://q3kkxsxubxrt" path="res://utility/hitbox.tscn" id="5_iqtxo"]
+[ext_resource type="PackedScene" uid="uid://0snat8gew3f2" path="res://utility/hurtbox.tscn" id="6_lxi26"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fty4g"]
-atlas = ExtResource("1_awhoo")
+atlas = ExtResource("4_0gx6h")
 region = Rect2(0, 0, 640, 640)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yrsng"]
-atlas = ExtResource("1_awhoo")
+atlas = ExtResource("4_0gx6h")
 region = Rect2(640, 0, 640, 640)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2mtny"]
-atlas = ExtResource("1_awhoo")
+atlas = ExtResource("4_0gx6h")
 region = Rect2(1280, 0, 640, 640)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t4a1s"]
-atlas = ExtResource("1_awhoo")
+atlas = ExtResource("4_0gx6h")
 region = Rect2(1920, 0, 640, 640)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_jfaar"]
@@ -56,13 +56,13 @@ radius = 28.0
 collision_layer = 4
 collision_mask = 6
 motion_mode = 1
-script = ExtResource("1_20nfx")
+script = ExtResource("1_k8fjp")
 
-[node name="Health" parent="." node_paths=PackedStringArray("hurtbox") instance=ExtResource("2_ave7c")]
+[node name="Health" parent="." node_paths=PackedStringArray("hurtbox") instance=ExtResource("2_o2yep")]
 max_health = 100
 hurtbox = NodePath("../Hurtbox")
 
-[node name="Loot" parent="." node_paths=PackedStringArray("health") instance=ExtResource("3_ic7ij")]
+[node name="Loot" parent="." node_paths=PackedStringArray("health") instance=ExtResource("3_u8rl8")]
 exp_points = 25.0
 bonus_chance = 0.231
 bonus_amount = 1.2
@@ -78,7 +78,7 @@ animation = &"walk"
 position = Vector2(3, 10)
 shape = SubResource("CircleShape2D_x2b1n")
 
-[node name="Hitbox" parent="." groups=["attack"] instance=ExtResource("4_1s1dd")]
+[node name="Hitbox" parent="." groups=["attack"] instance=ExtResource("5_iqtxo")]
 collision_layer = 2
 damage = 10
 
@@ -86,7 +86,7 @@ damage = 10
 position = Vector2(3, 10)
 shape = SubResource("CircleShape2D_kqs7v")
 
-[node name="Hurtbox" parent="." instance=ExtResource("3_6xfaf")]
+[node name="Hurtbox" parent="." instance=ExtResource("6_lxi26")]
 
 [node name="Collision" parent="Hurtbox" index="0"]
 position = Vector2(3, 10)

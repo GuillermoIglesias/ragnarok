@@ -26,7 +26,6 @@ var clock_seconds = 0
 
 # Spells
 @onready var Fire = preload("res://spells/fire.tscn")
-@onready var Nova = preload("res://spells/nova.tscn")
 
 # Upgrades
 @onready var Option = preload("res://menu/option.tscn")
@@ -42,9 +41,8 @@ var clock_seconds = 0
 @onready var clock = $GUILayer/GUI/Clock
 
 @onready var anim = $AnimatedSprite
-@onready var fire_timer = $Attacks/Fireball/FireTimer
-@onready var nova_timer = $Attacks/Icenova/NovaTimer
-@onready var fire_cast_timer = $Attacks/Fireball/FireCastTimer
+@onready var fire_timer = $Skills/FireCast/Timer
+@onready var fire_cast_timer = $Skills/FireCast/CastTimer
 
 @onready var health: Health = $Health
 
@@ -104,7 +102,7 @@ func movement():
 
 func set_spell_timers():
 	fire_timer.wait_time *= (1 - spell_cooldown)
-	nova_timer.wait_time *= (1 - spell_cooldown)
+#	nova_timer.wait_time *= (1 - spell_cooldown)
 
 
 func pause():
@@ -188,12 +186,6 @@ func get_closest_mob():
 		relative_mob_direction = position.direction_to(closest_mob.position)
 
 	return relative_mob_direction
-
-
-func _on_nova_timer_timeout():
-	var nova = Nova.instantiate()
-	nova.position = position
-	add_child(nova)
 
 
 func _on_grab_items_area_entered(area):

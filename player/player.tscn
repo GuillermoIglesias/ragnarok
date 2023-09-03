@@ -1,70 +1,72 @@
-[gd_scene load_steps=31 format=3 uid="uid://bh4ukwstrbqhb"]
+[gd_scene load_steps=33 format=3 uid="uid://bh4ukwstrbqhb"]
 
-[ext_resource type="Script" path="res://units/player/player.gd" id="1_b1vfs"]
-[ext_resource type="Texture2D" uid="uid://bkf325buucdwf" path="res://assets/textures/player/player_idle.png" id="2_6yahn"]
-[ext_resource type="Texture2D" uid="uid://ipjdp6e1mhyd" path="res://assets/textures/player/player_walk.png" id="3_6hsme"]
-[ext_resource type="PackedScene" uid="uid://0snat8gew3f2" path="res://utility/hurtbox.tscn" id="4_16c7j"]
-[ext_resource type="PackedScene" uid="uid://bi0b6s5cj150p" path="res://utility/health.tscn" id="4_38wwo"]
-[ext_resource type="Texture2D" uid="uid://b7sjjru25r26s" path="res://assets/textures/GUI/exp_background.png" id="5_iccq2"]
-[ext_resource type="Texture2D" uid="uid://cnryh4cv5nm8i" path="res://assets/textures/GUI/exp_progress.png" id="6_41pk2"]
-[ext_resource type="PackedScene" uid="uid://dx1cp2udrmlu8" path="res://menu/button.tscn" id="7_nni0k"]
-[ext_resource type="Texture2D" uid="uid://c513rdcu064a4" path="res://assets/textures/GUI/health_background.png" id="8_ac74r"]
-[ext_resource type="Texture2D" uid="uid://d5w6qjoyo8xx" path="res://assets/textures/GUI/health_progress.png" id="9_ovvdw"]
+[ext_resource type="Script" path="res://player/player.gd" id="1_d43uk"]
+[ext_resource type="Texture2D" uid="uid://bkf325buucdwf" path="res://assets/textures/player/player_idle.png" id="2_6xymu"]
+[ext_resource type="Texture2D" uid="uid://ipjdp6e1mhyd" path="res://assets/textures/player/player_walk.png" id="3_bpf58"]
+[ext_resource type="PackedScene" uid="uid://bi0b6s5cj150p" path="res://utility/health.tscn" id="4_0be6l"]
+[ext_resource type="Script" path="res://player/skills/nova_cast.gd" id="5_2ctr2"]
+[ext_resource type="PackedScene" uid="uid://0snat8gew3f2" path="res://utility/hurtbox.tscn" id="5_so4pg"]
+[ext_resource type="PackedScene" uid="uid://cjjncs3xcl7dl" path="res://spells/nova.tscn" id="6_bqjkq"]
+[ext_resource type="Texture2D" uid="uid://b7sjjru25r26s" path="res://assets/textures/GUI/exp_background.png" id="6_ij00g"]
+[ext_resource type="Texture2D" uid="uid://cnryh4cv5nm8i" path="res://assets/textures/GUI/exp_progress.png" id="7_c6b3n"]
+[ext_resource type="Texture2D" uid="uid://c513rdcu064a4" path="res://assets/textures/GUI/health_background.png" id="8_55c3j"]
+[ext_resource type="Texture2D" uid="uid://d5w6qjoyo8xx" path="res://assets/textures/GUI/health_progress.png" id="9_mvg3m"]
+[ext_resource type="PackedScene" uid="uid://dx1cp2udrmlu8" path="res://menu/button.tscn" id="10_8p8k2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8h5bo"]
-atlas = ExtResource("2_6yahn")
+atlas = ExtResource("2_6xymu")
 region = Rect2(0, 0, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_abwr3"]
-atlas = ExtResource("2_6yahn")
+atlas = ExtResource("2_6xymu")
 region = Rect2(0, 48, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bnunf"]
-atlas = ExtResource("2_6yahn")
+atlas = ExtResource("2_6xymu")
 region = Rect2(0, 96, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ofdmy"]
-atlas = ExtResource("2_6yahn")
+atlas = ExtResource("2_6xymu")
 region = Rect2(0, 144, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_00atc"]
-atlas = ExtResource("2_6yahn")
+atlas = ExtResource("2_6xymu")
 region = Rect2(0, 192, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7r54y"]
-atlas = ExtResource("2_6yahn")
+atlas = ExtResource("2_6xymu")
 region = Rect2(0, 240, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_86xoa"]
-atlas = ExtResource("3_6hsme")
+atlas = ExtResource("3_bpf58")
 region = Rect2(0, 0, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8agvc"]
-atlas = ExtResource("3_6hsme")
+atlas = ExtResource("3_bpf58")
 region = Rect2(0, 48, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yhdkb"]
-atlas = ExtResource("3_6hsme")
+atlas = ExtResource("3_bpf58")
 region = Rect2(0, 96, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ou8rp"]
-atlas = ExtResource("3_6hsme")
+atlas = ExtResource("3_bpf58")
 region = Rect2(0, 144, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7u7em"]
-atlas = ExtResource("3_6hsme")
+atlas = ExtResource("3_bpf58")
 region = Rect2(0, 192, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bixtp"]
-atlas = ExtResource("3_6hsme")
+atlas = ExtResource("3_bpf58")
 region = Rect2(0, 240, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wms5w"]
-atlas = ExtResource("3_6hsme")
+atlas = ExtResource("3_bpf58")
 region = Rect2(0, 288, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7aj44"]
-atlas = ExtResource("3_6hsme")
+atlas = ExtResource("3_bpf58")
 region = Rect2(0, 336, 32, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_7t53a"]
@@ -141,7 +143,7 @@ radius = 50.0
 collision_layer = 2
 collision_mask = 4
 motion_mode = 1
-script = ExtResource("1_b1vfs")
+script = ExtResource("1_d43uk")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
@@ -156,38 +158,38 @@ speed_scale = 2.0
 visible = false
 shape = SubResource("CapsuleShape2D_na0qv")
 
-[node name="Health" parent="." node_paths=PackedStringArray("hurtbox") instance=ExtResource("4_38wwo")]
+[node name="Health" parent="." node_paths=PackedStringArray("hurtbox") instance=ExtResource("4_0be6l")]
 max_health = 100
 hurtbox = NodePath("../Hurtbox")
 
-[node name="Attacks" type="Node" parent="."]
+[node name="Skills" type="Node" parent="."]
 
-[node name="Fireball" type="Node" parent="Attacks"]
+[node name="FireCast" type="Node" parent="Skills"]
 
-[node name="Detector" type="Area2D" parent="Attacks/Fireball"]
+[node name="Detector" type="Area2D" parent="Skills/FireCast"]
 visible = false
 collision_layer = 0
 collision_mask = 4
 
-[node name="AreaDetection" type="CollisionShape2D" parent="Attacks/Fireball/Detector"]
+[node name="AreaDetection" type="CollisionShape2D" parent="Skills/FireCast/Detector"]
 shape = SubResource("CircleShape2D_erng2")
 
-[node name="FireTimer" type="Timer" parent="Attacks/Fireball"]
+[node name="Timer" type="Timer" parent="Skills/FireCast"]
 autostart = true
 
-[node name="FireCastTimer" type="Timer" parent="Attacks/Fireball"]
+[node name="CastTimer" type="Timer" parent="Skills/FireCast"]
 wait_time = 0.075
 one_shot = true
 
-[node name="Icenova" type="Node" parent="Attacks"]
+[node name="NovaCast" type="Node" parent="Skills"]
+script = ExtResource("5_2ctr2")
+nova_scene = ExtResource("6_bqjkq")
 
-[node name="NovaTimer" type="Timer" parent="Attacks/Icenova"]
-wait_time = 5.0
-autostart = true
+[node name="Timer" type="Timer" parent="Skills/NovaCast"]
 
 [node name="Camera" type="Camera2D" parent="."]
 
-[node name="Hurtbox" parent="." instance=ExtResource("4_16c7j")]
+[node name="Hurtbox" parent="." instance=ExtResource("5_so4pg")]
 visible = false
 collision_layer = 0
 collision_mask = 2
@@ -230,8 +232,8 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 20.0
 grow_horizontal = 2
-texture_under = ExtResource("5_iccq2")
-texture_progress = ExtResource("6_41pk2")
+texture_under = ExtResource("6_ij00g")
+texture_progress = ExtResource("7_c6b3n")
 
 [node name="Level" type="Label" parent="GUILayer/GUI/ExpBar"]
 texture_filter = 1
@@ -253,8 +255,8 @@ anchor_top = 0.555556
 anchor_right = 0.525
 anchor_bottom = 0.577778
 offset_right = 1.52588e-05
-texture_under = ExtResource("8_ac74r")
-texture_progress = ExtResource("9_ovvdw")
+texture_under = ExtResource("8_55c3j")
+texture_progress = ExtResource("9_mvg3m")
 metadata/_edit_use_anchors_ = true
 
 [node name="LevelUp" type="Panel" parent="GUILayer/GUI"]
@@ -310,7 +312,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Continue" parent="GUILayer/GUI/Pause" instance=ExtResource("7_nni0k")]
+[node name="Continue" parent="GUILayer/GUI/Pause" instance=ExtResource("10_8p8k2")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.25
@@ -341,11 +343,11 @@ vertical_alignment = 1
 [node name="LevelTimer" type="Timer" parent="GUILayer/GUI"]
 autostart = true
 
-[connection signal="body_entered" from="Attacks/Fireball/Detector" to="." method="_on_detector_body_entered"]
-[connection signal="body_exited" from="Attacks/Fireball/Detector" to="." method="_on_detector_body_exited"]
-[connection signal="timeout" from="Attacks/Fireball/FireTimer" to="." method="_on_fire_timer_timeout"]
-[connection signal="timeout" from="Attacks/Fireball/FireCastTimer" to="." method="_on_fire_cast_timer_timeout"]
-[connection signal="timeout" from="Attacks/Icenova/NovaTimer" to="." method="_on_nova_timer_timeout"]
+[connection signal="body_entered" from="Skills/FireCast/Detector" to="." method="_on_detector_body_entered"]
+[connection signal="body_exited" from="Skills/FireCast/Detector" to="." method="_on_detector_body_exited"]
+[connection signal="timeout" from="Skills/FireCast/Timer" to="." method="_on_fire_timer_timeout"]
+[connection signal="timeout" from="Skills/FireCast/CastTimer" to="." method="_on_fire_cast_timer_timeout"]
+[connection signal="timeout" from="Skills/NovaCast/Timer" to="Skills/NovaCast" method="_on_timer_timeout"]
 [connection signal="area_entered" from="GrabItems" to="." method="_on_grab_items_area_entered"]
 [connection signal="area_entered" from="CollectItems" to="." method="_on_collect_items_area_entered"]
 [connection signal="pressed" from="GUILayer/GUI/Pause/Continue" to="." method="_on_continue_pressed"]

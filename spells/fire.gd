@@ -1,4 +1,5 @@
 extends Area2D
+class_name Fire
 
 var level = 1
 var health = 1
