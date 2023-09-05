@@ -16,8 +16,6 @@ var size = 1.0
 func _ready():
 	anim.play("attack")
 
-	size = 1.0 * (1 + player.spell_size)
-
 	var tween = create_tween()
 	tween.tween_property(self, "scale", Vector2(1, 1) * size, 1)
 	tween.set_trans(Tween.TRANS_QUINT)

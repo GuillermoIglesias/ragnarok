@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://bh4ukwstrbqhb"]
+[gd_scene load_steps=35 format=3 uid="uid://bh4ukwstrbqhb"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_d43uk"]
 [ext_resource type="Texture2D" uid="uid://bkf325buucdwf" path="res://assets/textures/player/player_idle.png" id="2_6xymu"]
@@ -6,8 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://bi0b6s5cj150p" path="res://utility/health.tscn" id="4_0be6l"]
 [ext_resource type="Script" path="res://player/skills/nova_cast.gd" id="5_2ctr2"]
 [ext_resource type="PackedScene" uid="uid://0snat8gew3f2" path="res://utility/hurtbox.tscn" id="5_so4pg"]
+[ext_resource type="Script" path="res://player/skills/fire_cast.gd" id="5_t4r55"]
 [ext_resource type="PackedScene" uid="uid://cjjncs3xcl7dl" path="res://spells/nova.tscn" id="6_bqjkq"]
 [ext_resource type="Texture2D" uid="uid://b7sjjru25r26s" path="res://assets/textures/GUI/exp_background.png" id="6_ij00g"]
+[ext_resource type="PackedScene" uid="uid://bgku0hj0a5f4f" path="res://spells/fire.tscn" id="6_o64sx"]
 [ext_resource type="Texture2D" uid="uid://cnryh4cv5nm8i" path="res://assets/textures/GUI/exp_progress.png" id="7_c6b3n"]
 [ext_resource type="Texture2D" uid="uid://c513rdcu064a4" path="res://assets/textures/GUI/health_background.png" id="8_55c3j"]
 [ext_resource type="Texture2D" uid="uid://d5w6qjoyo8xx" path="res://assets/textures/GUI/health_progress.png" id="9_mvg3m"]
@@ -165,6 +167,9 @@ hurtbox = NodePath("../Hurtbox")
 [node name="Skills" type="Node" parent="."]
 
 [node name="FireCast" type="Node" parent="Skills"]
+script = ExtResource("5_t4r55")
+enabled = true
+fire_scene = ExtResource("6_o64sx")
 
 [node name="Detector" type="Area2D" parent="Skills/FireCast"]
 visible = false
@@ -343,10 +348,10 @@ vertical_alignment = 1
 [node name="LevelTimer" type="Timer" parent="GUILayer/GUI"]
 autostart = true
 
-[connection signal="body_entered" from="Skills/FireCast/Detector" to="." method="_on_detector_body_entered"]
-[connection signal="body_exited" from="Skills/FireCast/Detector" to="." method="_on_detector_body_exited"]
-[connection signal="timeout" from="Skills/FireCast/Timer" to="." method="_on_fire_timer_timeout"]
-[connection signal="timeout" from="Skills/FireCast/CastTimer" to="." method="_on_fire_cast_timer_timeout"]
+[connection signal="body_entered" from="Skills/FireCast/Detector" to="Skills/FireCast" method="_on_detector_body_entered"]
+[connection signal="body_exited" from="Skills/FireCast/Detector" to="Skills/FireCast" method="_on_detector_body_exited"]
+[connection signal="timeout" from="Skills/FireCast/Timer" to="Skills/FireCast" method="_on_timer_timeout"]
+[connection signal="timeout" from="Skills/FireCast/CastTimer" to="Skills/FireCast" method="_on_cast_timer_timeout"]
 [connection signal="timeout" from="Skills/NovaCast/Timer" to="Skills/NovaCast" method="_on_timer_timeout"]
 [connection signal="area_entered" from="GrabItems" to="." method="_on_grab_items_area_entered"]
 [connection signal="area_entered" from="CollectItems" to="." method="_on_collect_items_area_entered"]

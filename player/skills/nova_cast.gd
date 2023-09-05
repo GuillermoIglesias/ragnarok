@@ -3,6 +3,7 @@ extends Node
 @export var enabled: bool = false
 @export var cooldown: float = 5.0
 @export var size: float = 1.0
+
 @export var nova_scene: PackedScene
 
 @onready var timer: Timer = $Timer

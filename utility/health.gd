@@ -7,7 +7,7 @@ signal missed
 
 @export var max_health: int = 10
 @export var armor: int = 0
-@export var evade: float = 0.0
+@export var evasion: float = 0.0
 @export var hurtbox: Hurtbox
 
 var health: int
@@ -20,7 +20,7 @@ func _ready():
 
 func damage(damage_amount: int):
 	damage_amount = (damage_amount - armor)
-	if evade > randf():
+	if evasion > randf():
 		damage_amount = 0
 		missed.emit()
 	health = max(health - damage_amount, 0)

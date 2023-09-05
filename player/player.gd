@@ -3,29 +3,16 @@ extends CharacterBody2D
 @export var base_speed = 60.0
 @export var speed = 60.0
 
-@export var spell_size = 0
-@export var spell_cooldown = 0
-
 @export var level = 1
 @export var experience = 0
 @export var collected_exp = 0
-
-@export var additional_spells = 0
-
-var fire_base_ammo = 1
-var fire_ammo = 0
 
 var upgrade_options = []
 var collected_upgrades = []
 
 var mouse_enabled = false
 var target = global_position
-var mobs_close = []
-var mobs_radar = []
 var clock_seconds = 0
-
-# Spells
-@onready var Fire = preload("res://spells/fire.tscn")
 
 # Upgrades
 @onready var Option = preload("res://menu/option.tscn")
@@ -41,8 +28,6 @@ var clock_seconds = 0
 @onready var clock = $GUILayer/GUI/Clock
 
 @onready var anim = $AnimatedSprite
-@onready var fire_timer = $Skills/FireCast/Timer
-@onready var fire_cast_timer = $Skills/FireCast/CastTimer
 
 @onready var health: Health = $Health
 
@@ -57,7 +42,6 @@ func _ready():
 	pause_menu.visible = false
 	anim.play("idle")
 	clock.text = "00:00"
-	set_spell_timers()
 
 
 func _process(_delta):
@@ -100,11 +84,6 @@ func movement():
 			anim.play("idle")
 
 
-func set_spell_timers():
-	fire_timer.wait_time *= (1 - spell_cooldown)
-#	nova_timer.wait_time *= (1 - spell_cooldown)
-
-
 func pause():
 	if Input.is_action_just_pressed("pause"):
 		var tween = pause_menu.create_tween()
@@ -123,6 +102,7 @@ func _on_continue_pressed():
 		pause_menu.visible = false
 		get_tree().paused = false
 
+
 func _on_health_changed(_health_amount: int):
 	set_health_bar(health.health, health.max_health)
 	print("Damage: ", _health_amount)
@@ -130,62 +110,6 @@ func _on_health_changed(_health_amount: int):
 
 func _on_died():
 	var _level = get_tree().change_scene_to_file("res://menu/main.tscn")
-
-
-func _on_detector_body_entered(body):
-	if not mobs_radar.has(body):
-		mobs_radar.append(body)
-
-
-func _on_detector_body_exited(body):
-	if mobs_radar.has(body):
-		mobs_radar.erase(body)
-
-
-func _on_fire_timer_timeout():
-	mobs_close.clear()
-	fire_ammo = fire_base_ammo + additional_spells
-	fire_cast_timer.start()
-
-
-func _on_fire_cast_timer_timeout():
-	if fire_ammo > 0:
-		var closest_mob = get_closest_mob()
-
-		if closest_mob != null:
-			var fire = Fire.instantiate()
-			fire.look_at(closest_mob)
-			fire.position = position
-			add_child(fire)
-
-			fire_ammo -= 1
-			if fire_ammo > 0:
-				fire_cast_timer.start()
-
-
-func get_closest_mob():
-	var shortest_distance = INF
-	var closest_mob = null
-
-	for mob in mobs_radar:
-		if not is_instance_valid(mob):
-			continue
-
-		if mobs_close.has(mob):
-			continue
-
-		var distance = position.distance_to(mob.position)
-		if distance < shortest_distance:
-			shortest_distance = distance
-			closest_mob = mob
-
-	var relative_mob_direction = null
-
-	if shortest_distance < INF:
-		mobs_close.append(closest_mob)
-		relative_mob_direction = position.direction_to(closest_mob.position)
-
-	return relative_mob_direction
 
 
 func _on_grab_items_area_entered(area):
@@ -278,12 +202,15 @@ func set_upgrade(upgrade):
 	elif upgrade.begins_with("speed"):
 		speed += base_speed * 0.5
 	elif upgrade.begins_with("tome"):
-		spell_size += 0.10
+#		spell_size += 0.10
+		pass
 	elif upgrade.begins_with("scroll"):
-		spell_cooldown += 0.05
-		set_spell_timers()
+#		spell_cooldown += 0.05
+#		set_spell_timers()
+		pass
 	elif upgrade.begins_with("ring"):
-		additional_spells += 1
+#		additional_spells += 1
+		pass
 	elif upgrade.begins_with("food"):
 		health.heal(20)
 
